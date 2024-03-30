@@ -573,10 +573,6 @@ def ch_2():
     return random_slice
 
 def ch_3():
-
-    # Slice the image
-    slices = slice_images(img1)
-
     # Choose a random slice
     random_slices = random.sample(slices, 2)
     random_slices_resized = [cv2.resize(slice, (250, 250)) for slice in random_slices]
