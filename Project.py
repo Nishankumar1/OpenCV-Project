@@ -131,7 +131,7 @@ def slice_image(image):
                 slice_image(sliced_image2)
             elif qah2 == 50:
                 if ch == 49:
-                    compare(sliced_image2, sqimg)
+                    compare(sliced_image2,sqimg)
                 elif ch == 50 :
                     if k == f:
                         if ch == 50:
@@ -536,13 +536,6 @@ def con_img_join(simg,fimg):
 
     
 def ch_1():
-# Load the image
-    image = cv2.imread('D:/Game/THE_IMAGE.jpg')
-    con = cv2.imread('D:/Game/CON.jpg')
-    con = cv2.resize(con,(250,250))
-# Slice the image
-    slices = slice_images(image)
-
 # Choose a random slice
     random_slice = random.choice(slices)
     random_slice = cv2.resize(random_slice, (250, 250))
@@ -556,11 +549,6 @@ def ch_1():
     return random_slice
 
 def ch_2():
-    image = cv2.imread('D:/Game/THE_IMAGE.jpg')
-    con = cv2.imread('D:/Game/CON.jpg')
-    con = cv2.resize(con,(250,250))
-# Slice the image
-    slices = slice_images(image)
 
 # Choose a random slice
     random_slice = random.choice(slices)
@@ -585,12 +573,9 @@ def ch_2():
     return random_slice
 
 def ch_3():
-    image = cv2.imread('D:/Game/THE_IMAGE.jpg')
-    con = cv2.imread('D:/Game/CON.jpg')
-    con = cv2.resize(con, (250, 250))
 
     # Slice the image
-    slices = slice_images(image)
+    slices = slice_images(img1)
 
     # Choose a random slice
     random_slices = random.sample(slices, 2)
@@ -617,8 +602,12 @@ def ch_3():
 
 img1 = cv2.imread('D:/Game/THE_IMAGE.jpg')
 suimg = cv2.imread('D:/Game/S.jpg')
+con = cv2.imread('D:/Game/CON.jpg')
+con = cv2.resize(con,(250,250))
 img1 = cv2.resize(img1,(250,250))   
 suimg = cv2.resize(suimg,(250,250))  
+# Slice the image
+slices = slice_images(img1)
 first = cv2.imread('D:/Game/First.jpg')
 first = cv2.resize(first, (250, 250))
 cv2.imshow("The Game",first)
