@@ -549,7 +549,6 @@ def ch_1():
     return random_slice
 
 def ch_2():
-
 # Choose a random slice
     random_slice = random.choice(slices)
     random_slice = cv2.resize(random_slice, (250, 250))
