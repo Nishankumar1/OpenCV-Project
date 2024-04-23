@@ -33,17 +33,79 @@ def compare(simg,img):
         cv2.imshow("Your Image",simg)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+        exit(0)
     else : 
         cv2.imshow("Lost",lost)
         cv2.imshow("Question Image",img)
         cv2.imshow("Your Image",simg)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+        exit(0)
         
-    
+def condition(image):
+    global cflags,ck,con_img1,cflagf
+    if ch == 49:
+        compare(image,sqimg)
+    elif ch == 50:
+        if k == s and fflag == 0:
+            flip_img(image)
+        elif k == s and fflag == 1:
+            compare(image,fqimg)
+        elif k == f and fflags == 0:
+            slice_image(image)
+        elif k == f and fflags == 1:
+            compare(image,fqimg)
+    elif ch == 51:
+        if k == s and cflag == 0:
+            flip_img(image)
+        elif k == s and cflag == 1 and cflags == 1:
+            con_img1 = image
+            cv2.imshow("Suggestion",suimg)
+            ck = cv2.waitKey(0)
+            cv2.destroyAllWindows()
+            cflags +=1
+            if ck == s:
+                slice_image(img1)
+            elif ck == f:
+                flip_img(img1)
+        if k == s:
+            if ck == s and cflags == 2:
+                flip_img(image)
+            elif ck == s and cflags == 3:
+                con_img2 = image
+                con_img_join(con_img1,con_img2)
+            elif ck == f and fflags == 2:
+                slice_image(image)
+            elif ck == f and fflags == 4:
+                con_img2 = image
+                con_img_join(con_img1,con_img2)
+        elif k == f and cflagf == 0:
+            cflagf +=1
+            slice_image(image)
+        elif k == f and cflagf == 1:
+            con_img1 = image
+            cv2.imshow("Suggestion",suimg)
+            ck = cv2.waitKey(0)
+            cv2.destroyAllWindows()
+            cflagf +=1
+            if ck == s:
+                slice_image(img1)
+            elif ck == f:
+                flip_img(img1)
+        if k == f:
+            if ck == s and cflags == 1:
+                flip_img(image)
+            elif ck == s and cflags == 2:
+                con_img2 = image
+                con_img_join(con_img1,con_img2)
+            elif ck == f and fflags == 2:
+                slice_image(image)
+            elif ck == f and fflags == 4:
+                con_img2 = image
+                con_img_join(con_img1,con_img2)
 
 def slice_image(image):
-    global csf
+    global fflags
     half_height=image.shape[0]//2
     half_width=image.shape[1]//2
     qimg2 = cv2.imread('D:/Game/QUE2.jpg')
@@ -63,6 +125,7 @@ def slice_image(image):
     cv2.imshow("Question(H/V)",qimg)
     qhv = cv2.waitKey(0)
     cv2.destroyAllWindows()
+    fflags +=1
     if qhv == 49:
         qimg1 = cv2.imread('D:/Game/QUE3.jpg')
         qimg1 = cv2.resize(qimg1,(250,250))
@@ -79,48 +142,7 @@ def slice_image(image):
             if qah1 == 49:
                 slice_image(sliced_image1)
             elif qah1 == 50:
-                if ch == 49:
-                    compare(sliced_image1,sqimg)
-                elif ch == 50:
-                    if k == f:
-                        if ch == 50:
-                            compare(sliced_image1,fqimg)
-                        elif ch == 51:
-                            cv2.imshow("Image",img1)
-                            cv2.imshow("suggestion",suimg)
-                            csf = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if csf == s:
-                                con_img(sliced_image1,img1)
-                            elif csf == f:
-                                con_flip_img(img1,sliced_image1)
-                    else:
-                        cv2.imshow("Image",sliced_image1)
-                        cv2.imshow("Suggestion",suimg)
-                        fp = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if fp == f:
-                            flip_img(sliced_image1)
-                elif ch == 51:
-                    if k == f:
-                        cv2.imshow("Image",img1)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image1,img1)
-                        elif csf == f:
-                            con_flip_img(img1,sliced_image1)
-                    else:
-                        cv2.imshow("Image",sliced_image1)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image1,img1)
-                        elif csf == f:
-                            flip_img(sliced_image1)
-                    
+                    condition(sliced_image1)
                     
         elif qul == 50:
             cv2.imshow("Image",sliced_image2)
@@ -130,47 +152,7 @@ def slice_image(image):
             if qah2 == 49:
                 slice_image(sliced_image2)
             elif qah2 == 50:
-                if ch == 49:
-                    compare(sliced_image2,sqimg)
-                elif ch == 50 :
-                    if k == f:
-                        if ch == 50:
-                            compare(sliced_image2,fqimg)
-                        elif ch == 51:
-                            cv2.imshow("Image",img1)
-                            cv2.imshow("suggestion",suimg)
-                            csf = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if csf == s:
-                                con_img(sliced_image2,img1)
-                            elif csf == f:
-                                con_flip_img(img1,sliced_image2)
-                    else:
-                        cv2.imshow("Image",sliced_image2)
-                        cv2.imshow("Suggestion",suimg)
-                        fp = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if fp == f:
-                            flip_img(sliced_image2)
-                elif ch == 51:
-                    if k == f:
-                        cv2.imshow("Image",img1)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image2,img1)
-                        elif csf == f:
-                            con_flip_img(img1,sliced_image2)
-                    else:
-                        cv2.imshow("Image",sliced_image2)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image2,img1)
-                        elif csf == f:
-                            flip_img(sliced_image2)
+                    condition(sliced_image2)
                 
     elif qhv == 50:
         cv2.imshow("Question5",qimg4)
@@ -186,37 +168,7 @@ def slice_image(image):
             if qva1 == 49:
                 slice_image(sliced_image4)
             elif qva1 == 50:
-                if ch == 49:
-                    compare(sliced_image4,sqimg)
-                elif ch == 50:
-                    if k == f:
-                        compare(sliced_image4,fqimg)
-                    else:
-                        cv2.imshow("Image",sliced_image4)
-                        cv2.imshow("Suggestion",suimg)
-                        fp = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if fp == f:
-                            flip_img(sliced_image4)
-                elif ch == 51:
-                    if k == f:
-                        cv2.imshow("Image",img1)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image4,img1)
-                        elif csf == f:
-                            con_flip_img(img1,sliced_image4)
-                    else:
-                        cv2.imshow("Image",sliced_image4)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image4,img1)
-                        elif csf == f:
-                            flip_img(sliced_image4)
+                    condition(sliced_image4)
                         
         elif qrl == 50:
             cv2.imshow("Image",sliced_image3)
@@ -226,50 +178,11 @@ def slice_image(image):
             if qva2 == 49:
                 slice_image(sliced_image3)
             elif qva2 == 50:
-                if ch == 49:
-                    compare(sliced_image3, sqimg)
-                elif ch == 50:
-                    if k == f:
-                        if ch == 50:
-                            compare(sliced_image3,fqimg)
-                        elif ch == 51:
-                            cv2.imshow("Image",img1)
-                            cv2.imshow("suggestion",suimg)
-                            csf = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if csf == s:
-                                con_img(sliced_image3,img1)
-                            elif csf == f:
-                                con_flip_img(img1,sliced_image3)
-                    else:
-                        cv2.imshow("Image",sliced_image3)
-                        cv2.imshow("Suggestion",suimg)
-                        fp = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if fp == f:
-                            flip_img(sliced_image3)
-                elif ch == 51:
-                    if k == f:
-                        cv2.imshow("Image",img1)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image3,img1)
-                        elif csf == f:
-                            con_flip_img(img1,sliced_image3)
-                    else:
-                        cv2.imshow("Image",sliced_image3)
-                        cv2.imshow("Suggestion",suimg)
-                        csf = cv2.waitKey(0)
-                        cv2.destroyAllWindows()
-                        if csf == s:
-                            con_img(sliced_image3,img1)
-                        elif csf == f:
-                            flip_img(sliced_image3)
+                    condition(sliced_image3)
+                
                     
 def flip_img(img):
-    global cfq
+    global fflag,cflag,cflags
     fq = cv2.imread("D:/Game/FLQ.jpg")
     fq = cv2.resize(fq,(250,250))
 #image flipped horizontally
@@ -283,258 +196,30 @@ def flip_img(img):
     cv2.imshow("Vertically",imgv)
     q = cv2.waitKey(0)
     cv2.destroyAllWindows()
+    fflag +=1
+    cflag +=1
+    cflags +=1
     if q == 49:
-        if k == f:
-            slice_image(imgh)
-        else:
-            if ch == 50:
-                compare(imgh,fqimg)
-            elif ch == 51:
-                cv2.imshow("Question",suimg)
-                cv2.imshow("Image2",img1)
-                cfq = cv2.waitKey(0)
-                cv2.destroyAllWindows()
-                if cfq == s:
-                    con_img(imgh,img1)
-                elif cfq == f:
-                    con_flip_img(img1,imgh)
-           
+        condition(imgh)
     elif q == 50:
-        if k == f:
-            slice_image(imgv)
-        else:
-            if ch == 50:
-                compare(imgv,fqimg)
-            elif ch == 51:
-                cv2.imshow("Question",suimg)
-                cv2.imshow("Image2",img1)
-                cfq = cv2.waitKey(0)
-                cv2.destroyAllWindows()
-                if cfq == s:
-                    con_img(imgv,img1)
-                elif cfq == f:
-                    con_flip_img(img1,imgv)
-        
-        
-        
-def con_img(imagef,img1):
-    global csf
-    half_height=img1.shape[0]//2
-    half_width=img1.shape[1]//2
-    qimg2 = cv2.imread('D:/Game/QUE2.jpg')
-    qimg2 = cv2.resize(qimg2,(250,250))
-    qimg4 = cv2.imread('D:/Game/QUE4.jpg')
-    qimg4 = cv2.resize(qimg4,(250,250))
-    sliced_image1=img1[:half_height,:]
-    sliced_image1 = cv2.resize(sliced_image1,(250,250))
-    sliced_image2=img1[half_height:,:]
-    sliced_image2 = cv2.resize(sliced_image2,(250,250))
-    sliced_image3=img1[:,:half_width]
-    sliced_image3 = cv2.resize(sliced_image3,(250,250))
-    sliced_image4=img1[:,half_width:]
-    sliced_image4 = cv2.resize(sliced_image4,(250,250))
-    qimg = cv2.imread('D:/Game/QUE1.jpg')
-    qimg = cv2.resize(qimg,(250,250))
-    cv2.imshow("Question H/V",qimg)
-    cv2.imshow("IMAGE2",img1)
-    qhv = cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    if qhv == 49:
-        qimg1 = cv2.imread('D:/Game/QUE3.jpg')
-        qimg1 = cv2.resize(qimg1,(250,250))
-        cv2.imshow("Question U/L",qimg1)
-        cv2.imshow("Upper",sliced_image1)
-        cv2.imshow("Lower",sliced_image2)
-        qul = cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        if qul == 49:
-            cv2.imshow("Image",sliced_image1)
-            cv2.imshow("Question A/N",qimg2)
-            qah1 = cv2.waitKey(0)
-            cv2.destroyAllWindows()
-            if qah1 == 49:
-                con_img(imagef,sliced_image1)
-            elif qah1 == 50:
-                    if k == f:
-                        if csf == f:
-                            con_img_join(sliced_image1,imagef)
-                        elif csf == s:
-                            cv2.imshow("Image",sliced_image1)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image1,imagef)
-                            elif cfq == f:
-                                con_img_join(sliced_image1,imagef)
-                        
-                    else:
-                        if cfq == s:
-                            cv2.imshow("Image",sliced_image1)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image1,imagef)
-                        elif cfq == f:
-                            con_img_join(sliced_image1,imagef)
-                    
-        elif qul == 50:
-            cv2.imshow("Image",sliced_image2)
-            cv2.imshow("Question R/L ",qimg2)
-            qah2 = cv2.waitKey(0)
-            cv2.destroyAllWindows()
-            if qah2 == 49:
-                con_img(imagef,sliced_image2)
-            elif qah2 == 50:
-                    if k == f:
-                        if csf == f:
-                            con_img_join(sliced_image2,imagef)
-                        elif csf == s:
-                            cv2.imshow("Image",sliced_image2)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image2,imagef)
-                            elif cfq == f:
-                                con_img_join(sliced_image2,imagef)
-                    else:
-                        if cfq == s:
-                            cv2.imshow("Image",sliced_image2)
-                            cv2.imshow("Suggestion",suimg)
-                            fp =  cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image2,imagef)
-                        elif cfq == f:
-                            con_img_join(sliced_image2,imagef)
-                
-    elif qhv == 50:
-        cv2.imshow("Question R/F ",qimg4)
-        cv2.imshow("Right",sliced_image4)
-        cv2.imshow("Left",sliced_image3)
-        qrl = cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        if qrl == 49:
-            cv2.imshow("Image",sliced_image4)
-            cv2.imshow("Question A/N",qimg2)
-            qva1 = cv2.waitKey(0)
-            cv2.destroyAllWindows()
-            if qva1 == 49:
-                con_img(imagef,sliced_image4)
-            elif qva1 == 50:
-                    if k == f:
-                        if csf == f:
-                            con_img_join(sliced_image4,imagef)
-                        elif csf == s:
-                            cv2.imshow("Image",sliced_image4)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image4,imagef)
-                            elif cfq == f:
-                                con_img_join(sliced_image4,imagef)
-                    else:
-                        if cfq == s:
-                            cv2.imshow("Image",sliced_image4)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image4,imagef)
-                        elif cfq == f:
-                            con_img_join(sliced_image4,imagef)
-                        
-        elif qrl == 50:
-            cv2.imshow("Image",sliced_image3)
-            cv2.imshow("Question A/N",qimg2)
-            qva2 = cv2.waitKey(0)
-            cv2.destroyAllWindows()
-            if qva2 == 49:
-                con_img(imagef,sliced_image3)
-            elif qva2 == 50:
-                    if k == f:
-                        if csf == f:
-                            con_img_join(sliced_image3,imagef)
-                        elif csf == s:
-                            cv2.imshow("Image",sliced_image3)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image3,imagef)
-                            elif cfq == f:
-                                con_img_join(sliced_image3,imagef)
-                    else:
-                        if cfq == s:
-                            cv2.imshow("Image",sliced_image3)
-                            cv2.imshow("Suggestion",suimg)
-                            fp = cv2.waitKey(0)
-                            cv2.destroyAllWindows()
-                            if fp == f:
-                                con_flip_img(sliced_image3,imagef)
-                        elif cfq == f:
-                            con_img_join(sliced_image3,imagef)
-def con_flip_img(simg,fimg):
-    global csf
-    fq = cv2.imread("D:/Game/FLQ.jpg")
-    fq = cv2.resize(fq,(250,250))
-    cv2.imshow("Question H/V",fq)
-    simgh = cv2.flip(simg,0)
-    simgh = cv2.resize(simgh,(250,250))
-    simgv = cv2.flip(simg,1)
-    simgv = cv2.resize(simgv,(250,250))
- #image flipped horizontally
-    cv2.imshow("Horizontally",simgh)
-#image flipped vertically
-    cv2.imshow("Vertically",simgv)
-    qcf = cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    if qcf == 49:
-        if k == f:
-            if csf == f:
-                con_img(fimg,simgh)
-            elif csf == s:
-                con_img_join(simgh,fimg)
-        else:
-            if cfq == s:
-                con_img_join(simgh,fimg)
-            elif cfq == f:
-                con_img(fimg,simgh)
-
-    elif qcf == 50: 
-        if k == f:   
-            if csf == f:
-                con_img(fimg,simgv)
-            elif csf == s:
-                con_img_join(simgv,fimg)
-        else:
-            if cfq == s:
-                con_img_join(simgv,fimg)
-            elif cfq == f:
-                con_img(fimg,simgv)
+        condition(imgv)
         
 
 def con_img_join(simg,fimg):
     sugc = cv2.imread("D:/Game/qc.jpg")
     sugc = cv2.resize(sugc,(250,250))
-    con_img1 = cv2.hconcat([simg,fimg])
-    con_img2 = cv2.hconcat([fimg,simg])
-    cv2.imshow("Image1 to Image2",con_img1)
-    cv2.imshow("Image2 to Image1",con_img2)
+    cimg1 = cv2.hconcat([simg,fimg])
+    cimg2 = cv2.hconcat([fimg,simg])
+    cv2.imshow("Image1 to Image2",cimg1)
+    cv2.imshow("Image2 to Image1",cimg2)
     cv2.imshow("Suggestion",sugc)
     sq = cv2.waitKey(0)
     cv2.destroyAllWindows()
     if sq == 49:
-        compare(con_img1,cqimg)
+        compare(cimg1,cqimg)
     elif sq == 50:
-       compare(con_img2,cqimg)
-        
-    
-
-    
+       compare(cimg2,cqimg)
+            
 def ch_1():
 # Choose a random slice
     random_slice = random.choice(slices)
@@ -616,6 +301,8 @@ elif ch == 51:
     cqimg = ch_3()
 s = ord("s")  
 f = ord("f")
+global fflag, fflags, cflag,cflags,cflagf
+fflag,fflags,cflag,cflags,cflagf= 0
 cv2.imshow("Suggestion",suimg)
 k = cv2.waitKey(0)
 cv2.destroyAllWindows()
